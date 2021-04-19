@@ -40,9 +40,6 @@ Set-Variable -Name "02" -Value "hd"
 $scttable.$02
 $scttable['$01','02'] #Does not print the way .$01 does...
 
--join ($scttable['hl','how']) #outputs >Hello, how can I help you today?, so that at least works--but how to pipe hashtable values to the -join operator?..
--join ($scttable['hl','how']) | Set-Clipboard #Works as intended--execute this, and you can Ctrl-P Paste "Hello, how can I help you today?"
-
 $hashtable1 = @{Name1="Value1";Name2="Value2"}
 
 
@@ -66,4 +63,8 @@ function hashfunction {
 hashfunction -hash $scttable
 
 function sct {$Scttable["$args"]}
-sct hl
+sct hl #This outputs "Hello, "
+sct hl how #But this does not output anything at all, let alone "Hello, how can I help you today?"
+
+-join ($scttable['hl','how']) #outputs >Hello, how can I help you today?, so that at least works--but how to pipe hashtable values to the -join operator?..
+-join ($scttable['hl','how']) | Set-Clipboard #Works as intended--execute this, and you can Ctrl-P Paste "Hello, how can I help you today?"
