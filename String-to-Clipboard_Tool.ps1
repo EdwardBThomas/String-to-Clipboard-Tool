@@ -2,6 +2,8 @@
 String-to-Clipboard Tool (SCT)
 #>
 
+#Make a section called "Things That Didn't Work & Their Intended Outcomes" Done: []
+
 <#
 Sequence of how it works:
 Invoke sct.ps1?
@@ -35,6 +37,8 @@ When calling the function, you must use @hashtable1 and not $hashtable1. Using t
 Example: hashfunction -hash @hashtable1
 #>
 
+$sctinput = Read-Host "Type shorthand, press enter." | -split {$_ ' '}
+
 Set-Variable -Name "01" -Value "hl" #make sure to load $scttable
 Set-Variable -Name "02" -Value "hd"
 $scttable.$02
@@ -42,13 +46,12 @@ $scttable['$01','02'] #Does not print the way .$01 does...
 
 $hashtable1 = @{Name1="Value1";Name2="Value2"}
 
-
 $Scttable = @{
 hl = "Hello, "
-gm = "Good morning,"
-ga = "Good afternoon,"
-hd = "Howdy,"
-bg = "Buongiorno,"
+gm = "Good morning, "
+ga = "Good afternoon, "
+hd = "Howdy, "
+bg = "Buongiorno, "
 how = "how can I help you today?"
 what = "what brings you to our support chat?"
 }
