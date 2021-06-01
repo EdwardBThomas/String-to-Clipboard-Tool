@@ -29,5 +29,5 @@ foreach($token in $sctinput)
 
 $outStr | 
     Set-Clipboard
-sct #this reloads the function, but is probably a janky way to do so.
+sct #this reloads the function, however I am sure there is a better way.
 }
