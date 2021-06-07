@@ -6,7 +6,7 @@ Open a PowerShell window, type this:
 
 function SCT 
 {
-$scttable = (Get-Content C:\Users\ebtho\OneDrive\Documents\PowerShell\SCTTableTXT-JSON.txt | ConvertFrom-JSON -AsHashtable)
+$scttable = (Get-Content C:\SCTTableTXT-JSON.txt | ConvertFrom-JSON -AsHashtable)
 
 [string]$sctinputStr = Read-Host "Type shorthand, press enter." 
 
