@@ -1,73 +1,29 @@
 ﻿<#
-String-to-Clipboard Tool (SCT)
+Open a PowerShell window, type this:
+. ".\sctdraft.ps1"
+...then type "SCT" and press enter.
 #>
 
-#Make a section called "Things That Didn't Work & Their Intended Outcomes" Done: []
+function SCT 
+{
+$scttable = (Get-Content C:\Users\ebtho\OneDrive\Documents\PowerShell\SCTTableTXT-JSON.txt | ConvertFrom-JSON -AsHashtable)
 
-<#
-Sequence of how it works:
-Invoke sct.ps1?
-Enter <hl,how> or any other abbreviated statement
-Entry is made into a variable
-Variable passed to -split operator by comma
-    '$_.' -split ','
-Each variable is keyed into $scttable[] 
-Save outputted values to an array?
--join operator
-    -$sctoutput = $sctarray -join ' '
-Set-Clipboard
-#>
+[string]$sctinputStr = Read-Host "Type shorthand, press enter." 
 
-<#
-Taken from the internet:
-$hashtable1 = @{Name1="Value1";Name2="Value2"}
+$sctinput = $sctinputStr.Split(" ")
 
-function hashfunction {
-    Param($hash)
-    foreach ($key in $hash.Keys){
-         Write-Host $hash[$key]
-     }
+$outStr ="";
+
+
+#iterate thru table and look up tokens.
+foreach($token in $sctinput)
+{
+
+    $outstr+= $Scttable[$token] 
+
 }
 
-hashfunction -hash $hashtable1
-
-This is appended down the chat with:
-When calling the function, you must use @hashtable1 and not $hashtable1. Using the variable name passes the variable as a HashTable object type instead of passing the keys and values.
-
-Example: hashfunction -hash @hashtable1
-#>
-
-$sctinput = Read-Host "Type shorthand, press enter." | -split {$_ ' '}
-
-Set-Variable -Name "01" -Value "hl" #make sure to load $scttable
-Set-Variable -Name "02" -Value "hd"
-$scttable.$02
-$scttable['$01','02'] #Does not print the way .$01 does...
-
-$hashtable1 = @{Name1="Value1";Name2="Value2"}
-
-$Scttable = @{
-hl = "Hello, "
-gm = "Good morning, "
-ga = "Good afternoon, "
-hd = "Howdy, "
-bg = "Buongiorno, "
-how = "how can I help you today?"
-what = "what brings you to our support chat?"
+$outStr | 
+    Set-Clipboard
+sct #this reloads the function, but is probably a suboptimal way to do so.
 }
-
-function hashfunction {
-    Param($hash)
-    foreach ($key in $hash.Keys){
-         Write-Host $hash[$key]
-     }
-}
-
-hashfunction -hash $scttable
-
-function sct {$Scttable["$args"]}
-sct hl #This outputs "Hello, "
-sct hl how #But this does not output anything at all, let alone "Hello, how can I help you today?"
-
--join ($scttable['hl','how']) #outputs >Hello, how can I help you today?, so that at least works--but how to pipe hashtable values to the -join operator?..
--join ($scttable['hl','how']) | Set-Clipboard #Works as intended--execute this, and you can Ctrl-P Paste "Hello, how can I help you today?"
